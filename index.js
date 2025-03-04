@@ -81,7 +81,7 @@ function handleAddTodo(){
     $(div).css("display","grid").css("grid-template-columns","1fr repeat(2, minmax(200px,auto))").css("gap","10px").css("padding","0px 20px")
     $(input).css("background-color","inherit").css("color","black").css("grid-column",1).css("border","none")
     $(editBtn).css("border","none").css("background-color","#0d6efd").css("color","white").css("grid-column",2)
-    $(deleteBtn).css("border","none").css("background-color","#0d6efd").css("color","white").css("grid-column",3)
+    $(deleteBtn).css("border","none").css("background-color","#CB0203").css("color","white").css("grid-column",3)
 
     //adding elements to DOM
     div.append(input,editBtn,deleteBtn)
