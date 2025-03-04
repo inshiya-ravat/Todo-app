@@ -43,7 +43,7 @@ function handleEdit(todoItem){
 function handleSave(todoItem){    
     const saveBtn = todoItem.ref.children[1]
     const input = todoItem.ref.children[0]
-    if(input.value == ""){
+    if(input.value.trim() == ""){
         alert('Add Todo in order to add it to the list!')
         return false
     }
@@ -53,7 +53,7 @@ function handleSave(todoItem){
     saveBtn.addEventListener("click",()=>handleEdit(todoItem))
 }
 function handleAddTodo(){
-    let todoInput = document.getElementById("todo").value
+    let todoInput = document.getElementById("todo").value.trim()
     
     //handle if empty todo added by user
     if(todoInput == ""){
