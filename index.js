@@ -4,7 +4,6 @@ function $(el){
     element: element,
         css: function (property, value){
             element.style.setProperty(property,value)
-            console.log(this)
                 return this
         }
     }
