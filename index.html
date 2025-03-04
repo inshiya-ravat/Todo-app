@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-100">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <script src="index.js"></script>
@@ -8,22 +8,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo App</title>
 </head>
-<body class="bg-info">
-    <header class="bg-primary text-white p-2 bg-gradient text-center">
+<body class="bg-info h-100">
+    <header class="bg-primary text-white py-2 text-center shadow">
         <h1>Todo App</h1>
     </header>
-    <main class="bg-info text-white container p-5 h-100">
+    <main class="container bg-white shadow-lg rounded p-4 my-4 ">
         <section>
-            <h4>Add new Todos here</h4>
-            <div class="d-flex gap-3 mb-5">
-                <input class="border-0 w-75 p-2" id="todo" type="text" placeholder="Complete TypeScript...">
-                <button title="Add todo" onclick="handleAddTodo()" class="border-0 bg-primary w-25 p-2">+</button>
+            <h4 class="text-primary fw-bold">Add new Todos here</h4>
+            <div class="input-group my-3">
+                <input class="form-control" id="todo" type="text" onkeydown="handleEnter(event.key)" placeholder="Complete TypeScript...">
+                <button title="Add todo" onclick="handleAddTodo()" class="btn btn-primary">+</button>
             </div>
         </section>
         <section>
-            <h4>Your Todos</h4>
-            <div>
-                <ul id="todo-list"></ul>
+            <h4 class="text-primary fw-bold">Your Todos</h4>
+            <div class="overflow-auto" style="height: 300px;">
+                <ul class="list-group" id="todo-list"></ul>
             </div>
         </section>
     </main>

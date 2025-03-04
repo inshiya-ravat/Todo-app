@@ -9,57 +9,95 @@ function $(el){
         }
     }
 }
+function idGenerator(){
+    let id = 0
+    return function(){
+        return id++
+    }
+}
+const id= idGenerator()
+todos=[]
 
-function handleAddTodo(event){
+function handleEnter(key){
+    if(key == "Enter"){
+        handleAddTodo()
+    }
+}
+
+function handleDelete(todoItem){
+    //removing todo from array
+   todos = todos.filter(todo=> todo.id !== todoItem.id)
+   //removing todo from DOM
+   todoItem.ref.parentElement.remove()
+}
+
+function handleEdit(todoItem){
+    const editBtn = todoItem.ref.children[1]
+    const input = todoItem.ref.children[0]
+    input.disabled = false
+    input.focus()
+    editBtn.textContent = 'Save'
+    editBtn.addEventListener("click",()=>handleSave(todoItem))
+}
+
+function handleSave(todoItem){    
+    const saveBtn = todoItem.ref.children[1]
+    const input = todoItem.ref.children[0]
+    if(input.value == ""){
+        alert('Add Todo in order to add it to the list!')
+        return false
+    }
+    input.disabled = true
+    saveBtn.textContent = 'Edit'
+    saveBtn.removeEventListener("click",()=>handleSave(todoItem))
+    saveBtn.addEventListener("click",()=>handleEdit(todoItem))
+}
+function handleAddTodo(){
     let todoInput = document.getElementById("todo").value
+    
+    //handle if empty todo added by user
     if(todoInput == ""){
         alert('Add Todo in order to add it to the list!')
         return false
     }
     document.getElementById("todo").value = ""
+
+    //creating new elements to be added in the todo list UI
     const ul = document.getElementById('todo-list')
     const li = document.createElement('li')
     const div = document.createElement('div')
-    const text = document.createTextNode(todoInput)
+    const input = document.createElement('input')
+    input.value = todoInput
+    input.disabled = true
 
     const editBtn = document.createElement('button')
     editBtn.textContent = 'Edit'
-    editBtn.addEventListener("click",handelEdit)
-    function handelEdit(){
-        const editInput = document.createElement('input')
-        editInput.value = text.textContent
-        text.replaceWith(editInput)
-
-        const saveBtn = document.createElement('button')
-        saveBtn.textContent = 'Save'
-        $(saveBtn).css("border","none").css("background-color","#0d6efd").css("color","white")
-        editBtn.replaceWith(saveBtn)
-        saveBtn.addEventListener("click", handleSave)
-        function handleSave(){
-            const updatedTodo = editInput.value
-            if(updatedTodo == ""){
-                alert('Add Todo in order to add it to the list!')
-                return false
-            }
-            saveBtn.replaceWith(editBtn)
-            editInput.replaceWith(updatedTodo)
-        }
-    }
 
     const deleteBtn = document.createElement('button')
     deleteBtn.textContent = 'Delete'
-    deleteBtn.addEventListener("click",handelDelete)
-    function handelDelete(){
-        li.remove()
-    }
 
-    //styling
+    //styling the new elements
     $(li).css("padding","10px")
-    $(div).css("display","grid").css("grid-template-columns","1fr repeat(2, minmax(200px,auto))").css("gap","10px")
+    $(div).css("display","grid").css("grid-template-columns","1fr repeat(2, minmax(200px,auto))").css("gap","10px").css("padding","0px 20px")
+    $(input).css("background-color","inherit").css("color","black").css("grid-column",1).css("border","none")
     $(editBtn).css("border","none").css("background-color","#0d6efd").css("color","white").css("grid-column",2)
     $(deleteBtn).css("border","none").css("background-color","#0d6efd").css("color","white").css("grid-column",3)
-    div.append(text,editBtn,deleteBtn)
+
+    //adding elements to DOM
+    div.append(input,editBtn,deleteBtn)
     li.appendChild(div)
     ul.appendChild(li)
-}
 
+    //creating and adding new todo into todo list
+    const todoItem = {
+        id: id(),
+        text: todoInput,
+        inEditState: false,
+        ref: Object.assign(div),
+    }
+    todos.push(todoItem)
+
+    //add event listeners on edit and delete button
+    editBtn.addEventListener("click",() => handleEdit(todoItem))
+    deleteBtn.addEventListener("click",() => handleDelete(todoItem))
+}
