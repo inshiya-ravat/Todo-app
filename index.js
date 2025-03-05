@@ -92,7 +92,7 @@ function handleAddTodo(){
         id: id(),
         text: todoInput,
         inEditState: false,
-        ref: Object.assign(div),
+        ref: div,
     }
     todos.push(todoItem)
 
